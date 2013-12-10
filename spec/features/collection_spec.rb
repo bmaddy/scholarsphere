@@ -83,7 +83,8 @@ describe 'collection', describe_options do
       within('#document_'+@collection.noid) do
         first('button.dropdown-toggle').click
         first(".itemtrash").click
-        page.driver.browser.switch_to.alert.accept
+        # This does work under PhantomJS/poltergeist
+        #page.driver.browser.switch_to.alert.accept
       end
       page.should_not have_content(@collection.title)
       page.should have_content("Dashboard")

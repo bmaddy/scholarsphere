@@ -20,6 +20,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'capybara/poltergeist'
 require 'mocha/setup'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -39,9 +40,12 @@ RSpec.configure do |config|
     puts "WARNING: #{batches_count} batches need cleaning up" if batches_count > 0
   end
 
+  # Use poltergeist (phantomjs driver) for feature tests requiring javascript
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {js_errors: true, port: 44678+ENV['TEST_ENV_NUMBER'].to_i, phantomjs_options: ['--proxy-type=none'], timeout: 180})
+    Capybara::Poltergeist::Driver.new(app, {js_errors: false, port: 44678+ENV['TEST_ENV_NUMBER'].to_i, phantomjs_options: ['--proxy-type=none'], timeout: 180})
   end
+  Capybara.default_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
 
   # == Mock Framework
   #

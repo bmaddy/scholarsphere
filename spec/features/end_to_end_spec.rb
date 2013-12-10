@@ -44,7 +44,7 @@ describe 'end to end behavior', describe_options do
       
       page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileupload");})
       
-       attach_file "fileupload", test_file_path
+      attach_file("fileupload", test_file_path)
       page.first('.start').click
       wait_until(30) do
         page.has_content?('Apply Metadata')
