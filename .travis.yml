@@ -4,9 +4,11 @@ rvm:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - HEADLESS=true
 before_install:
   - sudo apt-get install -qq clamav-daemon libclamav-dev clamav-data
   - sudo freshclam -v
+  - export PATH="$PATH:$(pwd)/fits"
 before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/redis.yml.sample config/redis.yml"
@@ -15,6 +17,7 @@ before_script:
   - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
   - "bundle exec rails g hydra:jetty"
+  - "echo ZZZZZZZZZZZZZZZZ $PATH ZZZZZZZZZZZZZZZZZ"
 services:
   - redis-server
 script:

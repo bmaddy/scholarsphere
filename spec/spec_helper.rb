@@ -39,9 +39,8 @@ RSpec.configure do |config|
     puts "WARNING: #{batches_count} batches need cleaning up" if batches_count > 0
   end
 
-  Capybara.register_driver :selenium do |app|
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    Capybara::Selenium::Driver.new(app, :profile => profile)
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, {js_errors: true, port: 44678+ENV['TEST_ENV_NUMBER'].to_i, phantomjs_options: ['--proxy-type=none'], timeout: 180})
   end
 
   # == Mock Framework

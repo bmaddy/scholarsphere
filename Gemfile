@@ -34,7 +34,6 @@ gem 'unicode', :platforms => [:mri_18, :mri_19]
 gem 'select2-rails', '3.4.2' # for transfer ownership javascript
 gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
 
-
 # crontab it up
 gem 'whenever'
 
@@ -48,9 +47,11 @@ group :development, :test do
   gem 'sqlite3'
   gem 'unicorn-rails'
   gem 'debugger'
-  gem 'selenium-webdriver', '~> 2.35.0'
+  #gem 'selenium-webdriver', '~> 2.35.0'
   gem 'rubyzip', '< 1.0.0' 
   gem 'headless'
+  gem 'poltergeist'
+  gem 'mocha-phantomjs'
   gem 'rspec-rails', '>= 2.11.0'
   gem 'mocha', '0.13.3', :require => false
   gem 'cucumber-rails', '~> 1.0', :require => false
