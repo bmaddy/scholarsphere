@@ -10,6 +10,7 @@ before_install:
 before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/redis.yml.sample config/redis.yml"
+  - "cp config/devise.yml.sample config/devise.yml"
   - "bundle exec rails g hydra:jetty"
   - "grep port jetty/etc/jetty.xml"
 services:
