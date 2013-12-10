@@ -151,6 +151,7 @@ GEM
     equivalent-xml (0.3.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.0.2)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
@@ -158,6 +159,8 @@ GEM
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
     fastercsv (1.5.5)
+    faye-websocket (0.4.7)
+      eventmachine (>= 0.12.0)
     ffi (1.9.3)
     font-awesome-sass-rails (3.0.2.2)
       railties (>= 3.1.1)
@@ -170,6 +173,7 @@ GEM
     highline (1.6.20)
     hike (1.2.3)
     hooks (0.3.3)
+    http_parser.rb (0.5.3)
     hydra-access-controls (6.4.1)
       active-fedora (~> 6.6)
       activesupport
@@ -285,6 +289,12 @@ GEM
       mime-types
     parslet (1.5.0)
       blankslate (~> 2.0)
+    poltergeist (1.0.3)
+      capybara (~> 1.1)
+      childprocess (~> 0.3)
+      faye-websocket (~> 0.4.4)
+      http_parser.rb (~> 0.5.3)
+      multi_json (~> 1.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-protection (1.5.1)
@@ -494,6 +504,7 @@ DEPENDENCIES
   mocha (= 0.13.3)
   mysql2 (= 0.3.11)
   nest (= 1.1.1)
+  poltergeist
   rails (= 4.0.2)
   resque-pool (= 0.3.0)
   rmagick (= 2.13.2)
@@ -501,7 +512,6 @@ DEPENDENCIES
   rubyzip (< 1.0.0)
   sass-rails (= 4.0.1)
   select2-rails (= 3.4.2)
-  selenium-webdriver (~> 2.35.0)
   sitemap (= 0.3.3)
   sqlite3
   sufia (~> 3.5.0)

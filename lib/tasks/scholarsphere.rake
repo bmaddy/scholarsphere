@@ -132,9 +132,6 @@ namespace :scholarsphere do
   task :fits_conf do
      puts 'copying fits config files'
      out =  `cp fits_conf/* fits/xml`
-     puts "cp output #{out}"
-     out2 =  `fits/fits.sh -i spec/fixtures/test.docx`
-     puts "ls output #{out2}"
   end
 
   desc "Execute Continuous Integration build (docs, tests with coverage)"
