@@ -17,7 +17,6 @@ before_script:
   - "cp config/fedora.yml.sample config/fedora.yml"
   - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
   - "bundle exec rails g hydra:jetty"
-  - "echo ZZZZZZZZZZZZZZZZ $PATH ZZZZZZZZZZZZZZZZZ"
 services:
   - redis-server
 script:
