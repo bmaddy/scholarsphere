@@ -3,7 +3,7 @@ rvm:
   - "2.0.0"
 env:
   global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 before_install:
   - sudo apt-get install -qq clamav-daemon libclamav-dev clamav-data
   - sudo freshclam -v
@@ -11,8 +11,10 @@ before_script:
   - "cp config/database.yml.travis config/database.yml"
   - "cp config/redis.yml.sample config/redis.yml"
   - "cp config/devise.yml.sample config/devise.yml"
+  - "cp config/solr.yml.sample config/solr.yml"
+  - "cp config/fedora.yml.sample config/fedora.yml"
+  - "cp config/hydra-ldap.yml.sample config/hydra-ldap.yml"
   - "bundle exec rails g hydra:jetty"
-  - "grep port jetty/etc/jetty.xml"
 services:
   - redis-server
 script:
@@ -26,5 +28,4 @@ notifications:
   irc:
     channels:
       - "irc.freenode.org#scholarsphere"
-    template:
-      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
+    template: "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"

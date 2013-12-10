@@ -128,18 +128,30 @@ namespace :scholarsphere do
     Sufia.queue.push(ResolrizeJob.new)
   end
 
+  desc 'copy fits configuration files into the fits submodule'
+  task :fits_conf do
+     puts 'copying fits config files'
+     out =  `cp fits_conf/* fits/xml`
+     puts "cp output #{out}"
+     out2 =  `fits/fits.sh -i spec/fixtures/test.docx`
+     puts "ls output #{out2}"
+  end
+
   desc "Execute Continuous Integration build (docs, tests with coverage)"
   task :ci => :environment do
     Rake::Task["jetty:config"].invoke
     Rake::Task["db:migrate"].invoke
+    Rake::Task["scholarsphere:fits_conf"].invoke
+    Rake::Task["scholarsphere:generate_secret"].invoke
 
     require 'jettywrapper'
     jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
+    jetty_params["jetty_port"] = 8983
 
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
       # do not run the js examples since selenium is not set up for jenkins
-      ENV['SPEC_OPTS']="-t ~js"      
+      #ENV['SPEC_OPTS']="-t ~js"
       Rake::Task['spec'].invoke
       Cucumber::Rake::Task.new(:features) do |t|
         t.cucumber_opts = "--format pretty"
