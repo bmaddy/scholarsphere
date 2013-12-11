@@ -53,7 +53,7 @@ group :development, :test do
   gem 'rspec-rails', '>= 2.11.0'
   gem 'mocha', '0.13.3', :require => false
   gem 'cucumber-rails', '~> 1.0', :require => false
-  gem 'capybara', '~>1.1.3'
+  gem 'capybara', '~> 2.0'
   gem 'jettywrapper'
   gem 'factory_girl_rails', '~> 4.1.0'
   gem 'launchy'

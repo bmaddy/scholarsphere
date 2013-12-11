@@ -2,46 +2,27 @@ require 'spec_helper'
 
 include Warden::Test::Helpers
 
-describe_options = {type: :feature}
-if ENV['JS']
-  describe_options[:js] = true
-end
+describe_options = { type: :feature }
+describe_options[:js] = true if ENV['JS']
 
 describe 'collection', describe_options do
-
-  def create_collection (title, description)
-    click_button('Create Collection')
-    wait_on_page('Create New Collection').should be_true
-    fill_in('Title', with:title)
-    fill_in('Description', with:description)
-    click_button("Create Collection")
-    wait_on_page('Items in this Collection').should be_true
-    page.has_content?(title)
-    page.has_content?(description)
-  end
-
-  let (:title1) {"Test Collection 1"}
-  let (:description1) {"Description for collection 1 we are testing."}
-  let (:title2) {"Test Collection 2"}
-  let (:description2) {"Description for collection 2 we are testing."}
-
-  
-  before(:each) do
+  before(:all) do
     @old_resque_inline_value = Resque.inline
     Resque.inline = true
   end
-  after(:each) do
-    Resque.inline = @old_resque_inline_value
-  end
-  before (:all) do
-  end
+
   after(:all) do
+    Resque.inline = @old_resque_inline_value
     User.destroy_all
     Batch.destroy_all
     GenericFile.destroy_all
     Collection.destroy_all
   end
-  
+
+  let(:title1) {"Test Collection 1"}
+  let(:description1) {"Description for collection 1 we are testing."}
+  let(:title2) {"Test Collection 2"}
+  let(:description2) {"Description for collection 2 we are testing."}
 
   describe 'create a proxy' do
     before (:all) do
@@ -50,7 +31,7 @@ describe 'collection', describe_options do
     after (:all) do
       @user2.destroy
     end
-    it "should create proxy", js: true do
+    it "should create proxy" do
       login_js
       visit '/'
       first('a.dropdown-toggle').click
@@ -74,20 +55,20 @@ describe 'collection', describe_options do
     after (:all) do
       @user1.destroy
     end
-    it "should allow for on behalf deposit", js: true do
-      user_key = 'archivist1'
-      login_js user_key
+
+    it "should allow for on behalf deposit" do
+      login_js('archivist1')
       visit '/'
       first('a.dropdown-toggle').click
       click_link('upload')
       wait_on_page('I have read', time=5)
       check("terms_of_service")
-      select 'jilluser', :from => "on_behalf_of"
+      select('jilluser', from: 'on_behalf_of')
       test_file_path = Rails.root.join('spec/fixtures/world.png').to_s
-      file_format = 'png (Portable Network Graphics)'
-      page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileupload");})
-
-      attach_file "fileupload", test_file_path
+      page.driver.render('/home/mjg/Desktop/before_script.png')
+      page.execute_script(%Q{$("input[type=file]").css("opacity", "1").css("-moz-transform", "none");$("input[type=file]").attr('id',"fileselect");})
+      page.driver.render('/home/mjg/Desktop/after_script.png')
+      attach_file("fileselect", test_file_path)
       page.first('.start').click
       wait_until(30) do
         page.has_content?('Apply Metadata')
@@ -99,9 +80,6 @@ describe 'collection', describe_options do
       first('i.icon-plus').click
       node = first('table.expanded-details')
       node.text.should include('Depositor: jilluser')
-
     end
-
   end
-  
 end

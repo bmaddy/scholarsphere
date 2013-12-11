@@ -25,7 +25,7 @@ require 'mocha/setup'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
@@ -42,7 +42,11 @@ RSpec.configure do |config|
 
   # Use poltergeist (phantomjs driver) for feature tests requiring javascript
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {js_errors: false, port: 44678+ENV['TEST_ENV_NUMBER'].to_i, phantomjs_options: ['--proxy-type=none'], timeout: 180})
+    Capybara::Poltergeist::Driver.new(app, {
+        js_errors: false,
+        inspector: true,
+        phantomjs_options: ['--proxy-type=none']
+      })
   end
   Capybara.default_driver = :poltergeist
   Capybara.javascript_driver = :poltergeist

@@ -122,7 +122,6 @@ namespace :scholarsphere do
     idList.each { |o| Sufia.queue.push(CharacterizeJob.new o["id"])}
   end
 
-
   desc "Re-solrize all objects"
   task :resolrize => :environment do
     Sufia.queue.push(ResolrizeJob.new)
@@ -143,12 +142,9 @@ namespace :scholarsphere do
 
     require 'jettywrapper'
     jetty_params = Jettywrapper.load_config.merge({:jetty_home => File.expand_path(File.join(Rails.root, 'jetty'))})
-    jetty_params["jetty_port"] = 8983
 
     error = nil
     error = Jettywrapper.wrap(jetty_params) do
-      # do not run the js examples since selenium is not set up for jenkins
-      #ENV['SPEC_OPTS']="-t ~js"
       Rake::Task['spec'].invoke
       Cucumber::Rake::Task.new(:features) do |t|
         t.cucumber_opts = "--format pretty"
