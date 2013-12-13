@@ -15,6 +15,7 @@
 
 require 'spec_helper'
 
+
 describe UsersController do
   before(:each) do
     @routes = Sufia::Engine.routes
@@ -30,18 +31,7 @@ describe UsersController do
     @another_user.delete if @user
   end
   describe "#show" do
-    it "show the user profile if user exists" do
-      get :show, id: @user.login
-      response.should be_success
-      response.should_not redirect_to(root_path)
-      flash[:alert].should be_nil
-    end
-    it "redirects to root if user does not exist" do
-      get :show, id: 'johndoe666'
-      response.should redirect_to(root_path)
-      flash[:alert].should include ("User 'johndoe666' does not exist")
-    end
-      it "removes unmatched trophy in show" do
+    it "removes unmatched trophy in show" do
       @file = GenericFile.new
       @file.apply_depositor_metadata(@user.login)
       @file.save

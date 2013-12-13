@@ -15,15 +15,13 @@
 class UsersController < ApplicationController
   include Sufia::UsersControllerBehavior
 
-  # Display user profile
-  def show
-    @events = @user.profile_events(100) rescue []
-    @followers = @user.followers
-    @following = @user.all_following
+  before_filter  :adjust_trophies!, only: [:show, :edit]
+  before_filter  :linked_in, only:[:show]
+
+  def linked_in
     @linkedInUrl = @user.linkedin_handle
     @linkedInUrl = "http://www.linkedin.com/in/" + @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'linkedin.com'
     @linkedInUrl = "http://"+ @linkedInUrl unless @linkedInUrl.blank? or @linkedInUrl.include? 'http'
-    adjust_trophies!
   end
 
   # Display form for users to edit their profile information
@@ -31,7 +29,6 @@ class UsersController < ApplicationController
     @user = current_user
     @groups = @user.groups
     @trophies = []
-    adjust_trophies!
   end
 
 
