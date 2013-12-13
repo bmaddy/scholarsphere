@@ -135,6 +135,45 @@ describe 'collection', describe_options do
       # Should not have Dashboard content in contents listing
       page.should_not have_content("Visibility")
     end
+
+    describe "pagination" do
+      before do
+        add_n_files_to_collection(@collection, 15, user: 'jilluser')
+      end
+      it "show should provide paginated browsing of collection contents" do
+        login_js
+        visit("/collections/#{@collection.noid}")
+        save_and_open_page
+        page.should have_content("Edit Collection: "+@collection.title)
+        page.should have_content("Sort By")
+        page.should have_content("per page")
+        page.should have_content("Previous")
+        page.should have_content("Next")
+        page.should have_link("1", class:"disabled")
+        page.should have_xpath("//a[href='/collection/#{@collection.noid}/page/1'][class='disabled'][contains(., '1')]")
+        #page.should have_select("a.disabled[href='/collection/#{@collection.noid}/page/1']")
+
+        click_link("2")
+        #click_link("/collection/#{@collection.noid}/page/2")
+      end
+      it "edit should provide paginated browsing of collection contents" do
+        login_js
+        visit("/collections/#{@collection.noid}")
+        click_link("Edit")
+        save_and_open_page
+        page.should have_content("Edit Collection: "+@collection.title)
+        page.should have_content("Sort By")
+        page.should have_content("per page")
+        page.should have_content("Previous")
+        page.should have_content("Next")
+        page.should have_link("1", class:"disabled")
+        page.should have_xpath("//a[href='/collection/#{@collection.noid}/page/1'][class='disabled'][contains(., '1')]")
+        #page.should have_select("a.disabled[href='/collection/#{@collection.noid}/page/1']")
+
+        click_link("2")
+        #click_link("/collection/#{@collection.noid}/page/2")
+      end
+    end
   end
 
   describe 'edit collection' do
@@ -143,7 +182,7 @@ describe 'collection', describe_options do
       @collection.description = 'collection description'
       @collection.apply_depositor_metadata(@user_key)
       @collection.members = [@gf1, @gf2]
-      @collection.save
+      @collectionve
     end
 
     it "should edit and update collection metadata" do
