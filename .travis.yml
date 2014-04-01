@@ -26,13 +26,4 @@ services:
 script:
   - "bundle exec rake scholarsphere:ci"
 notifications:
-  email:
-    recipients:
-      - "ul-dlt-hydra@lists.psu.edu"
-    on_success: "change"
-    on_failure: "always"
-  irc:
-    channels:
-      - "irc.freenode.org#scholarsphere"
-    template:
-      - "%{repository}//%{branch}@%{commit} by %{author}: %{message} - %{build_url}"
+  email: false
