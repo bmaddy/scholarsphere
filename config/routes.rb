@@ -1,4 +1,5 @@
 ScholarSphere::Application.routes.draw do
+  mount BrowseEverything::Engine => '/browse'
   resource :landing_page, only: [:new, :create]
   get ':managedata' => 'landing_pages#new', :as => :request_info, :constraints => { :managedata => /managedata/i }
   get ':managedata/:thankyou' => 'landing_pages#thanks', :as => :request_thanks, :constraints => { :managedata => /managedata/i, :thankyou=> /thankyou/i }

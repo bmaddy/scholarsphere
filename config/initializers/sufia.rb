@@ -2,6 +2,7 @@
 Sufia::Engine.configure do
   config.application_name = "ScholarSphere"
   config.google_analytics_id = Rails.application.google_analytics_id
+  config.browse_everything = BrowseEverything.config
   config.enable_contact_form_delivery = true
   config.contact_form_delivery_body = <<-EOM
     Greetings,

@@ -82,7 +82,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     acts_as_follower (0.2.1)
-    addressable (2.3.5)
+    addressable (2.3.6)
     arel (4.0.2)
     atomic (1.1.16)
     autoparse (0.3.3)
